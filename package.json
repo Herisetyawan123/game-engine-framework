@@ -1,0 +1,9 @@
+{
+  "name": "game-framework-assets",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:assets": "node tools/asset-pack-generator.js",
+    "watch:assets": "node tools/asset-pack-generator.js --watch"
+  }
+}

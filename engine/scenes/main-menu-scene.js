@@ -11,6 +11,6 @@ class MainMenuScene extends Scene {
     g.ui.add(new Label(BASE_WIDTH / 2, 540, 'Best Score: ' + g.storage.getHighScore(), { align: 'center', font: '24px sans-serif' }));
   }
   render(ctx) { 
-    setBackgroundImage(ctx, this.game.assets, 'background');
+    setBackgroundImage(ctx, this.game.assets, 'ui/bg');
    }
 }
