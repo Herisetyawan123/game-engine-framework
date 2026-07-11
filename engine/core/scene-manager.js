@@ -1,5 +1,12 @@
 class SceneManager {
-  constructor(game) { this.game = game; this.scenes = {}; this.current = null; this.currentKey = null; }
+  constructor(game) { 
+    this.game = game; 
+    this.scenes = {
+      '404': NotFoundScene,
+    }; 
+    this.current = null; 
+    this.currentKey = null; 
+  }
   register(key, SceneClass) { this.scenes[key] = SceneClass; }
   switchTo(key, data) {
     if (this.current) this.current.destroy();
@@ -7,7 +14,12 @@ class SceneManager {
     this.game.tweens.clear();
     this.game.animations.clear();
     const SceneClass = this.scenes[key];
-    if (!SceneClass) { console.error('Unknown scene:', key); return; }
+    if (!SceneClass) { 
+      this.current = new this.scenes['404'](this.game);
+      this.currentKey = '404';
+      this.current.create();
+      return;
+    }
     this.current = new SceneClass(this.game);
     this.currentKey = key;
     this.current.create(data);

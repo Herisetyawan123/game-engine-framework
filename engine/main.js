@@ -87,15 +87,12 @@ class Game {
     registerAllAssets(this.assets, {
       images: window.__ASSETS_PACK__.images,
     });
+
+    // core scenes
     this.scenes.register('boot', BootScene);
     this.scenes.register('loading', LoadingScene);
-    this.scenes.register('menu', MainMenuScene);
-    this.scenes.register('game', GameScene);
-    this.scenes.register('settings', SettingsScene);
-    this.scenes.register('result', ResultScene);
-    this.scenes.register('gameover', GameOverScene);
-    this.scenes.register('credits', CreditsScene);
-
+    registerAllScenes(this);
+    
     this.scenes.switchTo('boot');
     requestAnimationFrame(t => this._loop(t));
   }
