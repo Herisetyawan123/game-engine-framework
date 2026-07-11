@@ -37,4 +37,9 @@ function registerAllAssets(assets, opts = {}) {
   for(const key in imageBase64) {
     assets.registerImageBase64(key, imageBase64[key]);
   }
+
+  const audioBase64 = opts.audios || {};
+  for(const key in audioBase64) {
+    assets.registerSound(key, audioBase64[key]);
+  }
 }

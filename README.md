@@ -1,20 +1,23 @@
-# Mini Game Framework Offline
+# MonoHTML Engine
 
-Framework sederhana untuk membuat game 2D lokal dengan HTML5 Canvas, tanpa dependensi eksternal, dan kompatibel untuk dijalankan langsung dari file lokal.
+*Build once. Double-click anywhere.*
+
+MonoHTML Engine adalah framework sederhana untuk membuat game 2D lokal berbasis HTML5 Canvas, tanpa dependensi eksternal, dan kompatibel untuk dijalankan langsung dari file lokal. Framework ini cocok untuk prototyping, mini game, dan game ringan yang ingin berjalan offline.
 
 ## Fitur utama
 
 - Berbasis HTML5 Canvas
 - Offline-friendly, tidak memerlukan server atau jaringan
-- Tersedia manager untuk scene, input, audio, tween, animasi, UI, storage, dan responsive
+- Menyediakan manager untuk scene, input, audio, tween, animasi, UI, storage, responsive, fullscreen, dan rotate
 - Mendukung asset gambar yang di-embed sebagai base64 melalui file asset pack
 - Dapat dijalankan langsung dari browser tanpa build step
+- Struktur modular dengan folder engine, scenes, assets, dan tools
 
 ## Struktur folder
 
 ```text
 assets/
-  asset.pack.js        # hasil konversi gambar ke base64
+  asset.pack.js
   css/
   images/
   js/
@@ -22,11 +25,23 @@ engine/
   config.js
   main.js
   core/
-  custom/
   helpers/
   scenes/
   ui/
+scenes/
+  credits-scene.js
+  game-over-scene.js
+  game-scene.js
+  main-menu-scene.js
+  result-scene.js
+  setting-scene.js
+  routes/
+  ui/
+tools/
+  asset-pack-generator.js
 index.html
+package.json
+README.md
 ```
 
 ## Cara kerja asset pack
@@ -73,4 +88,4 @@ Buka file [index.html](index.html) di browser, atau jalankan dari server lokal j
 
 ## Kontribusi dan pengembangan
 
-Framework ini masih disusun secara sederhana dan cocok untuk kebutuhan prototyping, mini game, atau game lokal ringan.
+Framework ini terus disusun secara modular dan cocok untuk kebutuhan prototyping, mini game, atau game lokal ringan.

@@ -11,6 +11,8 @@ class AudioManager {
     this.bgmOsc = null;
     this.bgmGain = null;
     this.bgmPlaying = false;
+    this.bgm = null;
+    this.bgmAudio = null;
   }
   _ensureCtx() {
     if (!this.ctx) {
@@ -56,7 +58,14 @@ class AudioManager {
     if (this.bgmOsc) { try { this.bgmOsc.stop(); } catch (e) {} this.bgmOsc = null; }
     this.bgmPlaying = false;
   }
-  setMuted(m) { this.muted = m; if (m) this.stopBgm(); this._saveSettings(); }
+  setMuted(m) { 
+    this.muted = m; 
+    if (m) this.stopBgm(); 
+    this._saveSettings(); 
+
+    if(!m && this.bgm) this.startBacksound();
+    if(m && this.bgm) this.pauseBacksound();
+  }
   toggleMute() { this.setMuted(!this.muted); return this.muted; }
   setVolume(v) {
     this.volume = clamp(v, 0, 1);
@@ -64,4 +73,34 @@ class AudioManager {
     this._saveSettings();
   }
   _saveSettings() { this.storage.setSettings({ muted: this.muted, volume: this.volume }); }
+  
+  startBacksound(opt = {})
+  {
+      const bgm = this.bgm;
+      if (!bgm) return;
+
+      // Belum pernah dibuat
+      if (!this.bgmAudio) {
+          this.bgmAudio = new Audio();
+          this.bgmAudio.src = bgm;
+          this.bgmAudio.loop = true;
+          this.bgmAudio.volume = this.volume;
+      }
+
+      // Sinkronkan volume
+      this.bgmAudio.volume = this.volume;
+
+      // Resume jika sedang pause
+      if (this.bgmAudio.paused && !this.muted) {
+          this.bgmAudio.play().catch(() => {});
+      }
+  }
+
+
+  pauseBacksound()
+  {
+      if (this.bgmAudio && !this.bgmAudio.paused) {
+          this.bgmAudio.pause();
+      }
+  }
 }

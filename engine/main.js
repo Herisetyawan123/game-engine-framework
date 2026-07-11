@@ -84,9 +84,9 @@ class Game {
     this.fixedStep = 1 / 60;
     this.accumulator = 0;
 
-    registerAllAssets(this.assets, {
-      images: window.__ASSETS_PACK__.images,
-    });
+    registerAllAssets(this.assets, window.__ASSETS_PACK__);
+
+    this.audio.bgm = this.assets.getSound('bgm'); // assign the BGM generator function
 
     // core scenes
     this.scenes.register('boot', BootScene);
