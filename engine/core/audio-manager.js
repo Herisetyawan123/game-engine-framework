@@ -63,6 +63,8 @@ class AudioManager {
     if (m) this.stopBgm(); 
     this._saveSettings(); 
 
+    console.log("AudioManager: setMuted", m);
+    console.log("AudioManager: bgm", this.bgm);
     if(!m && this.bgm) this.startBacksound();
     if(m && this.bgm) this.pauseBacksound();
   }

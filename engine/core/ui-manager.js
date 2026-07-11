@@ -20,4 +20,5 @@ class UIManager {
   }
   clear() { this.elements.forEach(el => this.input.unregister(el)); this.elements = []; }
   draw(ctx) { this.elements.forEach(el => el.draw(ctx)); }
+  getElementByKey(key) { return this.elements.find(el => el.key === key); }
 }

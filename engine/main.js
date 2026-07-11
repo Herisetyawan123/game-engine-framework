@@ -93,7 +93,7 @@ class Game {
     this.scenes.register('loading', LoadingScene);
     registerAllScenes(this);
     
-    this.scenes.switchTo('boot');
+    this.scenes.switchTo('home');
     requestAnimationFrame(t => this._loop(t));
   }
   _loop(timestamp) {

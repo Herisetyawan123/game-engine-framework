@@ -4,12 +4,8 @@
 // kalau ga di register, bakal switch ke scene 404 (NotFoundScene)
 
 function registerAllScenes(game) {
-    game.first_scene = "menu"; // set first scene to menu
+    game.first_scene = "home"; // set first scene to menu
 
-    game.scenes.register('menu', MainMenuScene);
-    game.scenes.register('game', GameScene);
-    game.scenes.register('settings', SettingsScene);
-    game.scenes.register('result', ResultScene);
-    game.scenes.register('gameover', GameOverScene);
-    game.scenes.register('credits', CreditsScene);
+    game.scenes.register('home', HomeScene);
+    game.scenes.register('page-one', PageOneScene);
 }
