@@ -6,10 +6,16 @@ function drawBackdrop(ctx, assets) {
   else { ctx.fillStyle = '#111827'; ctx.fillRect(0, 0, BASE_WIDTH, BASE_HEIGHT); }
 }
 
+function setBackgroundImage(ctx, assets, key) {
+  const img = assets.getImage(key);
+  if (img) ctx.drawImage(img, 0, 0, BASE_WIDTH, BASE_HEIGHT);
+  else { ctx.fillStyle = '#111827'; ctx.fillRect(0, 0, BASE_WIDTH, BASE_HEIGHT); }
+}
+
 /* Registers every procedurally-generated asset used by the demo game.
    Replace registerImage(...) calls with registerImageBase64(...) once real
    artwork is embedded - nothing else in the framework needs to change. */
-function registerAllAssets(assets) {
+function registerAllAssets(assets, opts = {}) {
   assets.registerImage('bg_gradient', (ctx, w, h) => {
     const grad = ctx.createLinearGradient(0, 0, 0, h);
     grad.addColorStop(0, '#1e293b');
@@ -26,4 +32,9 @@ function registerAllAssets(assets) {
     shape_hex: (ctx, w, h) => { drawPolygon(ctx, w / 2, h / 2, w / 2 - 6, 6, '#14b8a6'); }
   };
   for (const key in shapeDrawers) assets.registerImage(key, shapeDrawers[key], 120, 120);
+
+  const imageBase64 = opts.images || {};
+  for(const key in imageBase64) {
+    assets.registerImageBase64(key, imageBase64[key]);
+  }
 }

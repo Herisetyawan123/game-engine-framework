@@ -84,7 +84,9 @@ class Game {
     this.fixedStep = 1 / 60;
     this.accumulator = 0;
 
-    registerAllAssets(this.assets);
+    registerAllAssets(this.assets, {
+      images: window.__ASSETS_PACK__.images,
+    });
     this.scenes.register('boot', BootScene);
     this.scenes.register('loading', LoadingScene);
     this.scenes.register('menu', MainMenuScene);
