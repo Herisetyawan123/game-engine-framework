@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Offline HTML5 Game Framework</title>
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+  </div>
+
+  <div id="rotate-overlay">
+    <div class="rotate-icon"></div>
+    <p>Please rotate your device</p>
+  </div>
+
+  <script src="engine/core/audio-manager.js"></script>
+  <script src="engine/core/asset-manager.js"></script>
+  <script src="engine/core/fullscreen-manager.js"></script>
+  <script src="engine/core/input-manager.js"></script>
+  <script src="engine/core/responsive-manager.js"></script>
+  <script src="engine/core/rotate-manager.js"></script>
+  <script src="engine/core/store-manager.js"></script>
+  <script src="engine/core/animation-manager.js"></script>
+  <script src="engine/core/ui-manager.js"></script>
+  <script src="engine/core/tween-manager.js"></script>
+
+  <!-- All About UI -->
+   <!-- dont remove this -->
+  <script src="engine/ui/base-element.js"></script>
+
+  <!-- Animation UI -->
+  <script src="engine/ui/animations/tween-animation.js"></script>
+
+  <!-- UI Element -->
+   <script src="engine/ui/button-element.js"></script>
+   <script src="engine/ui/dialog-element.js"></script>
+   <script src="engine/ui/icon-element.js"></script>
+   <script src="engine/ui/label-element.js"></script>
+   <script src="engine/ui/panel-element.js"></script>
+   <script src="engine/ui/popup-element.js"></script>
+   <script src="engine/ui/progress-bar-element.js"></script>
+   <script src="engine/ui/slider-element.js"></script>
+   <script src="engine/ui/toggle-element.js"></script>
+
+
+  <!-- All About Scene -->
+  <!-- dont remove this -->
+   <script src="engine/scenes/main/base-scene.js"></script>
+   <script src="engine/scenes/main/boot-scene.js"></script>
+   <script src="engine/scenes/main/loading-scene.js"></script>
+  
+  <!-- Custom UI for Scene -->
+  <script src="engine/custom/ui/card.js"></script>
+
+  <!-- Scenes -->
+   <script src="engine/scenes/main-menu-scene.js"></script>
+   <script src="engine/scenes/game-scene.js"></script>
+   <script src="engine/scenes/setting-scene.js"></script>
+   <script src="engine/scenes/result-scene.js"></script>
+   <script src="engine/scenes/credits-scene.js"></script>
+   <script src="engine/scenes/game-over-scene.js"></script>
+
+
+  <!-- Main script -->
+  <script src="engine/config.js"></script>
+  <script src="engine/helpers/main.js"></script>
+  <script src="engine/main.js"></script>
+</body>
+</html>
