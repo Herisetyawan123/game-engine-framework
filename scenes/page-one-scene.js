@@ -18,7 +18,7 @@ class PageOneScene extends Scene {
       assets: g.assets,
       imageKey: 'page_1/answer_drop_panel',
       accepts: item => item.id === 'head',
-      onDrop: (dragItem, dropArea, success) => {
+      onDrop: (success) => {
         if(success) {
           // replace image empty_word_panel with image of the body part that was dropped
           const emptyWordPanel = g.ui.getElementByKey('empty_word_panel');

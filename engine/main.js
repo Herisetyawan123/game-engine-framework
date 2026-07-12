@@ -93,7 +93,8 @@ class Game {
     this.scenes.register('loading', LoadingScene);
     registerAllScenes(this);
     
-    this.scenes.switchTo('home');
+    this.first_scene = this.scenes.getRouteKey(this.first_scene || 'home');
+    this.scenes.switchTo(this.first_scene, null, { updateRoute: true });
     requestAnimationFrame(t => this._loop(t));
   }
   _loop(timestamp) {

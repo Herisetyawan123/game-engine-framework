@@ -99,8 +99,8 @@ class DragArea extends UIElement {
       this.y = this.originalY;
     }
 
-    if (target.onDrop) target.onDrop(this, target, success);
-    else if (this.onDrop) this.onDrop(this, target, success);
+    if (target && target.onDrop) target.onDrop(success);
+    else if (this.onDrop) this.onDrop(success);
     if (this.onEndDrag) this.onEndDrag(this, target);
   }
 }

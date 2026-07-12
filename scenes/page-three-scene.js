@@ -17,13 +17,13 @@ class PageThreeScene extends Scene {
       label: 'DROP HERE',
       assets: g.assets,
       imageKey: 'page_2/answer_drop_panel',
-      accepts: item => item.id === 'legs',
-      onDrop: (dragItem, dropArea, success) => {
+      accepts: item => item.id === 'hand',
+      onDrop: (success) => {
         if(success) {
           // replace image empty_word_panel with image of the body part that was dropped
           const emptyWordPanel = g.ui.getElementByKey('empty_word_panel');
           if (emptyWordPanel) {
-            emptyWordPanel.setImage('page_3/legs_answer_panel', {
+            emptyWordPanel.setImage('page_3/hand_answer_panel', {
               x: BASE_WIDTH / 2 - 300, 
               y: 500, 
               width: 350, 
@@ -46,30 +46,30 @@ class PageThreeScene extends Scene {
 
     let dragItems = [
       new DragArea({ 
-        x: BASE_WIDTH / 2 + 200, 
-        y: 150, 
-        width: 240, 
-        height: 240, 
+        x: BASE_WIDTH / 2 + 300, 
+        y: 180, 
+        width: 150, 
+        height: 150, 
         assets: g.assets, 
         imageKey: 'page_3/hand_1', 
-        id: 'head',
-        key: 'head'
+        id: 'hand',
+        key: 'hand'
       }),
       new DragArea({ 
-        x: BASE_WIDTH / 2 + 160, 
-        y: 340, 
-        width: 100, 
-        height: 100, 
+        x: BASE_WIDTH / 2 + 150, 
+        y: 200, 
+        width: 180, 
+        height: 300, 
         assets: g.assets, 
         imageKey: 'page_3/arm_1', 
-        id: 'fingers',
-        key: 'fingers'
+        id: 'arm',
+        key: 'arm'
       }),
       new DragArea({ 
         x: BASE_WIDTH / 2 + 300, 
-        y: 280, 
-        width: 280, 
-        height: 280, 
+        y: 330, 
+        width: 170, 
+        height: 220, 
         assets: g.assets, 
         imageKey: 'page_3/legs', 
         id: 'legs',
@@ -89,7 +89,7 @@ class PageThreeScene extends Scene {
 
   playAudio() {
     const g = this.game;
-    const src = g.assets.getSound('vo/word_l');
+    const src = g.assets.getSound('vo/word_h');
     g.audio.play(src);
   }
 

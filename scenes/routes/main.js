@@ -8,6 +8,6 @@ function registerAllScenes(game) {
 
     game.scenes.register('home', HomeScene);
     game.scenes.register('page-one', PageOneScene);
-        game.scenes.register('demo', DemoScene);
-        game.scenes.register('page-two', PageTwoScene);
+    game.scenes.register('page-two', PageTwoScene);
+    game.scenes.register('page-three', PageThreeScene);
 }
