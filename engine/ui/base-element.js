@@ -31,6 +31,7 @@ class UIElement {
     this.y = resolveUIAnchorValue(parsed.y, BASE_HEIGHT, height);
     this.width = width;
     this.height = height;
+    this.key = parsed.key || parsed.id || null;
     this.visible = true; this.active = true;
   }
   contains(px, py) {

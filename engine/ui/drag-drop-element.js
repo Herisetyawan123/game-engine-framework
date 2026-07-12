@@ -6,8 +6,9 @@ class DragArea extends UIElement {
     const options = isObjectSpec ? { ...spec, ...opts } : opts;
 
     this.assets = options.assets || null;
-    this.image = options.image || options.backgroundImage || options.background || null;
+    this.image = options.image || options.backgroundImage || options.background || options.src || null;
     this.imageKey = options.imageKey || options.bgImageKey || options.key || null;
+    this.key = options.key || options.id || null;
     this.color = options.color || 'rgba(59,130,246,0.95)';
     this.radius = options.radius !== undefined ? options.radius : 16;
     this.stroke = options.stroke || '#f8fafc';
@@ -108,8 +109,9 @@ class DropArea extends UIElement {
     const options = isObjectSpec ? { ...spec, ...opts } : opts;
 
     this.assets = options.assets || null;
-    this.image = options.image || options.backgroundImage || options.background || null;
+    this.image = options.image || options.backgroundImage || options.background || options.src || null;
     this.imageKey = options.imageKey || options.bgImageKey || options.key || null;
+    this.key = options.key || options.id || null;
     this.color = options.color || 'rgba(15,23,42,0.85)';
     this.radius = options.radius !== undefined ? options.radius : 24;
     this.stroke = options.stroke || '#94a3b8';
