@@ -18,7 +18,7 @@ class PageTwoScene extends Scene {
       assets: g.assets,
       imageKey: 'page_2/answer_drop_panel',
       accepts: item => item.id === 'legs',
-      onDrop: (success) => {
+      onDrop: (dragItem, success) => {
         if(success) {
           // replace image empty_word_panel with image of the body part that was dropped
           const emptyWordPanel = g.ui.getElementByKey('empty_word_panel');
@@ -31,6 +31,7 @@ class PageTwoScene extends Scene {
             });
           }
           this.playSuccess();
+          dragItem.setImage('page_2/legs_drop_answer')
 
           // delay 1 second then switch to next scene
           setTimeout(() => {
@@ -67,9 +68,9 @@ class PageTwoScene extends Scene {
       }),
       new DragArea({ 
         x: BASE_WIDTH / 2 + 300, 
-        y: 280, 
-        width: 280, 
-        height: 280, 
+        y: 330, 
+        width: 170, 
+        height: 220, 
         assets: g.assets, 
         imageKey: 'page_2/legs_1', 
         id: 'legs',
@@ -89,7 +90,7 @@ class PageTwoScene extends Scene {
 
   playAudio() {
     const g = this.game;
-    const src = g.assets.getSound('vo/word_h');
+    const src = g.assets.getSound('vo/word_l');
     g.audio.play(src);
   }
 

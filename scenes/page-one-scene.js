@@ -18,7 +18,7 @@ class PageOneScene extends Scene {
       assets: g.assets,
       imageKey: 'page_1/answer_drop_panel',
       accepts: item => item.id === 'head',
-      onDrop: (success) => {
+      onDrop: (dragItem, success) => {
         if(success) {
           // replace image empty_word_panel with image of the body part that was dropped
           const emptyWordPanel = g.ui.getElementByKey('empty_word_panel');
@@ -31,6 +31,7 @@ class PageOneScene extends Scene {
             });
           }
           this.playSuccess();
+          dragItem.setImage('page_1/head_drop_answer')
 
           // delay 1 second then switch to next scene
           setTimeout(() => {

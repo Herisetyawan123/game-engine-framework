@@ -10,4 +10,7 @@ function registerAllScenes(game) {
     game.scenes.register('page-one', PageOneScene);
     game.scenes.register('page-two', PageTwoScene);
     game.scenes.register('page-three', PageThreeScene);
+        game.scenes.register('page-four', PageFourScene);
+        game.scenes.register('page-five', PageFiveScene);
+        game.scenes.register('page-end', PageEndScene);
 }

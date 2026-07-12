@@ -99,9 +99,32 @@ class DragArea extends UIElement {
       this.y = this.originalY;
     }
 
-    if (target && target.onDrop) target.onDrop(success);
-    else if (this.onDrop) this.onDrop(success);
+    if (target && target.onDrop) target.onDrop(this, success);
+    else if (this.onDrop) this.onDrop(this, success);
     if (this.onEndDrag) this.onEndDrag(this, target);
+  }
+
+  setImage(src, opts = {})
+  {
+    if (typeof src === 'string') {
+      this.imageKey = src;
+      this.image = null;
+    } else {
+      this.image = src;
+      this.imageKey = null;
+    }
+    
+    if (opts && typeof opts === 'object' && !Array.isArray(opts)) {
+      const { xOrSpec, y, w, h, width, height } = opts;
+      const hasPositionConfig = xOrSpec !== undefined || y !== undefined || w !== undefined || h !== undefined || width !== undefined || height !== undefined;
+      if (hasPositionConfig) {
+        const spec = normalizeUIPositionSpec(xOrSpec !== undefined ? xOrSpec : opts, y, w ?? width, h ?? height);
+        this.x = resolveUIAnchorValue(spec.x, BASE_WIDTH, spec.width ?? this.width);
+        this.y = resolveUIAnchorValue(spec.y, BASE_HEIGHT, spec.height ?? this.height);
+        this.width = spec.width ?? this.width;
+        this.height = spec.height ?? this.height;
+      }
+    }
   }
 }
 
@@ -164,5 +187,26 @@ class DropArea extends UIElement {
       ctx.fillText(this.label, this.x + this.width / 2, this.y + this.height / 2);
     }
     ctx.restore();
+  }
+
+  setImage(imageOrKey, opts = {}) {
+    if (typeof imageOrKey === 'string') {
+      this.imageKey = imageOrKey;
+      this.image = null;
+    } else {
+      this.image = imageOrKey;
+      this.imageKey = null;
+    }
+    if (opts && typeof opts === 'object' && !Array.isArray(opts)) {
+      const { xOrSpec, y, w, h, width, height } = opts;
+      const hasPositionConfig = xOrSpec !== undefined || y !== undefined || w !== undefined || h !== undefined || width !== undefined || height !== undefined;
+      if (hasPositionConfig) {
+        const spec = normalizeUIPositionSpec(xOrSpec !== undefined ? xOrSpec : opts, y, w ?? width, h ?? height);
+        this.x = resolveUIAnchorValue(spec.x, BASE_WIDTH, spec.width ?? this.width);
+        this.y = resolveUIAnchorValue(spec.y, BASE_HEIGHT, spec.height ?? this.height);
+        this.width = spec.width ?? this.width;
+        this.height = spec.height ?? this.height;
+      }
+    }
   }
 }

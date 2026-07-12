@@ -18,7 +18,7 @@ class PageThreeScene extends Scene {
       assets: g.assets,
       imageKey: 'page_2/answer_drop_panel',
       accepts: item => item.id === 'hand',
-      onDrop: (success) => {
+      onDrop: (dragItem, success) => {
         if(success) {
           // replace image empty_word_panel with image of the body part that was dropped
           const emptyWordPanel = g.ui.getElementByKey('empty_word_panel');
@@ -31,10 +31,11 @@ class PageThreeScene extends Scene {
             });
           }
           this.playSuccess();
+          dragItem.setImage('page_3/hand_drop_answer')
 
           // delay 1 second then switch to next scene
           setTimeout(() => {
-            g.scenes.switchTo('page-three');
+            g.scenes.switchTo('page-four');
           }, 1000);
         }else{
           this.playWrong();
