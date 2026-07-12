@@ -2,9 +2,9 @@ class PageOneScene extends Scene {
   create() {
     const g = this.game;
     this.createNavigation();
+    this.playAudio();
 
     g.ui.add(new ImageView({ x: 'center', y: 50, width: 300, height: 60, assets: g.assets, src: 'page_1/title' }));
-    // g.ui.add(new ImageView({ x: BASE_WIDTH / 2 - 250, y: 200, width: 250, height: 250, assets: g.assets, key: 'page_1/answer_drop_panel' }));
     g.ui.add(new ImageView({ x: BASE_WIDTH / 2 - 300, y: 500, width: 350, height: 100, assets: g.assets, src: 'page_1/empty_word_panel', key: 'empty_word_panel' }));
     g.ui.add(new ImageView({ x: BASE_WIDTH / 2 + 150, y: 150, width: 350, height: 400, assets: g.assets, src: 'page_1/body_part_panel' }));
 
@@ -18,16 +18,26 @@ class PageOneScene extends Scene {
       assets: g.assets,
       imageKey: 'page_1/answer_drop_panel',
       accepts: item => item.id === 'head',
-      onDrop: (dragItem, dropArea) => {
-        // replace image empty_word_panel with image of the body part that was dropped
-        const emptyWordPanel = g.ui.getElementByKey('empty_word_panel');
-        if (emptyWordPanel) {
-          emptyWordPanel.setImage('page_1/head_answer_panel', {
-            x: BASE_WIDTH / 2 - 300, 
-            y: 500, 
-            width: 350, 
-            height: 150,
-          });
+      onDrop: (dragItem, dropArea, success) => {
+        if(success) {
+          // replace image empty_word_panel with image of the body part that was dropped
+          const emptyWordPanel = g.ui.getElementByKey('empty_word_panel');
+          if (emptyWordPanel) {
+            emptyWordPanel.setImage('page_1/head_answer_panel', {
+              x: BASE_WIDTH / 2 - 300, 
+              y: 500, 
+              width: 350, 
+              height: 150,
+            });
+          }
+          this.playSuccess();
+
+          // delay 1 second then switch to next scene
+          setTimeout(() => {
+            g.scenes.switchTo('page-two');
+          }, 1000);
+        }else{
+          this.playWrong();
         }
       }
     });
@@ -75,6 +85,26 @@ class PageOneScene extends Scene {
   }
   render(ctx) { 
     setBackgroundImage(ctx, this.game.assets, 'page_1/background_1');
+  }
+
+  playAudio() {
+    const g = this.game;
+    const src = g.assets.getSound('vo/word_h');
+    g.audio.play(src);
+  }
+
+  playSuccess()
+  {
+      const g = this.game;
+      const src = g.assets.getSound('vo/correct');
+      g.audio.play(src);
+  }
+
+  playWrong()
+  {
+      const g = this.game;
+      const src = g.assets.getSound('vo/wrong');
+      g.audio.play(src);
   }
 
   createNavigation()

@@ -63,8 +63,6 @@ class AudioManager {
     if (m) this.stopBgm(); 
     this._saveSettings(); 
 
-    console.log("AudioManager: setMuted", m);
-    console.log("AudioManager: bgm", this.bgm);
     if(!m && this.bgm) this.startBacksound();
     if(m && this.bgm) this.pauseBacksound();
   }
@@ -97,12 +95,30 @@ class AudioManager {
           this.bgmAudio.play().catch(() => {});
       }
   }
-
-
   pauseBacksound()
   {
       if (this.bgmAudio && !this.bgmAudio.paused) {
           this.bgmAudio.pause();
       }
   }
+
+  play(src, opt = {}) {
+      if (this.muted) return;
+      
+      // Jika ada backsound, pause dulu
+      const wasBgmPlaying = this.bgmAudio && !this.bgmAudio.paused;
+      if (wasBgmPlaying) {
+          this.pauseBacksound(); 
+      }
+
+      const audio = new Audio();
+      audio.src = src;
+      audio.volume = this.volume;
+      audio.play().catch(() => {});
+      audio.onended = () => {
+          if (wasBgmPlaying) {
+              this.startBacksound();
+          }
+      };
+  } 
 }

@@ -88,16 +88,19 @@ class DragArea extends UIElement {
       }
     }
 
+    let success = false;
+
     if (target && target.canAccept && target.canAccept(this) !== false) {
       this.x = target.x + (target.width - this.width) / 2;
       this.y = target.y + (target.height - this.height) / 2;
-      if (target.onDrop) target.onDrop(this, target);
-      else if (this.onDrop) this.onDrop(this, target);
+      success = true;
     } else if (this.revertOnDrop) {
       this.x = this.originalX;
       this.y = this.originalY;
     }
 
+    if (target.onDrop) target.onDrop(this, target, success);
+    else if (this.onDrop) this.onDrop(this, target, success);
     if (this.onEndDrag) this.onEndDrag(this, target);
   }
 }
