@@ -24,7 +24,10 @@ class PageFourScene extends Scene {
           const emptyWordPanel = g.ui.getElementByKey('empty_word_panel');
           if (emptyWordPanel) {
             emptyWordPanel.setImage('page_4/fingers_answer_panel', {
-              x: BASE_WIDTH / 2 - 320, y: 480, width: 420, height: 140,
+              x: BASE_WIDTH / 2 - 345, 
+              y: 480, 
+              width: 450, 
+              height: 140,
             });
           }
           this.playSuccess();

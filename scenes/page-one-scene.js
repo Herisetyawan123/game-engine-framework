@@ -24,9 +24,9 @@ class PageOneScene extends Scene {
           const emptyWordPanel = g.ui.getElementByKey('empty_word_panel');
           if (emptyWordPanel) {
             emptyWordPanel.setImage('page_1/head_answer_panel', {
-              x: BASE_WIDTH / 2 - 300, 
-              y: 500, 
-              width: 350, 
+              x: BASE_WIDTH / 2 - 325, 
+              y: 475, 
+              width: 400, 
               height: 150,
             });
           }
@@ -57,7 +57,7 @@ class PageOneScene extends Scene {
         key: 'head'
       }),
       new DragArea({ 
-        x: BASE_WIDTH / 2 + 160, 
+        x: BASE_WIDTH / 2 + 180, 
         y: 340, 
         width: 100, 
         height: 100, 
@@ -68,11 +68,11 @@ class PageOneScene extends Scene {
       }),
       new DragArea({ 
         x: BASE_WIDTH / 2 + 300, 
-        y: 280, 
-        width: 280, 
-        height: 280, 
+        y: 350, 
+        width: 150, 
+        height: 200, 
         assets: g.assets, 
-        imageKey: 'page_1/legs_1', 
+        imageKey: 'page_1/legs', 
         id: 'legs',
         key: 'legs'
       }),

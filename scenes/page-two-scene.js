@@ -24,9 +24,9 @@ class PageTwoScene extends Scene {
           const emptyWordPanel = g.ui.getElementByKey('empty_word_panel');
           if (emptyWordPanel) {
             emptyWordPanel.setImage('page_2/legs_answer_panel', {
-              x: BASE_WIDTH / 2 - 300, 
-              y: 500, 
-              width: 350, 
+              x: BASE_WIDTH / 2 - 325, 
+              y: 475, 
+              width: 400, 
               height: 150,
             });
           }
