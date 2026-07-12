@@ -1,7 +1,10 @@
 class Slider extends UIElement {
-  constructor(x, y, w, h, value, onChange) {
-    super(x, y, w, h);
-    this.value = clamp(value, 0, 1); this.onChange = onChange; this.dragging = false;
+  constructor(xOrSpec, y, w, h, value, onChange) {
+    const isObjectSpec = xOrSpec && typeof xOrSpec === 'object' && !Array.isArray(xOrSpec);
+    const spec = isObjectSpec ? xOrSpec : normalizeUIPositionSpec(xOrSpec, y, w, h);
+    super(spec.x, spec.y, spec.width, spec.height);
+    const options = isObjectSpec ? { ...spec, value, onChange } : { value, onChange };
+    this.value = clamp(options.value, 0, 1); this.onChange = options.onChange; this.dragging = false;
   }
   draw(ctx) {
     ctx.save();

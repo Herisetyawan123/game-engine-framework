@@ -1,12 +1,15 @@
 class Button extends UIElement {
-  constructor(x, y, w, h, label, onClick, opts = {}) {
-    super(x, y, w, h);
-    this.label = label;
-    this.onClick = onClick;
-    this.baseColor = opts.color || '#3b82f6';
-    this.hoverColor = opts.hoverColor || '#2563eb';
-    this.textColor = opts.textColor || '#ffffff';
-    this.font = opts.font || '24px sans-serif';
+  constructor(xOrSpec, y, w, h, label, onClick, opts = {}) {
+    const isObjectSpec = xOrSpec && typeof xOrSpec === 'object' && !Array.isArray(xOrSpec);
+    const spec = isObjectSpec ? xOrSpec : normalizeUIPositionSpec(xOrSpec, y, w, h);
+    super(spec.x, spec.y, spec.width, spec.height);
+    const options = isObjectSpec ? { ...spec, ...opts } : opts;
+    this.label = options.label ?? options.text ?? label ?? '';
+    this.onClick = options.onClick ?? options.onclick ?? onClick ?? null;
+    this.baseColor = options.color || '#3b82f6';
+    this.hoverColor = options.hoverColor || '#2563eb';
+    this.textColor = options.textColor || '#ffffff';
+    this.font = options.font || '24px sans-serif';
     this.pressed = false;
   }
   draw(ctx) {

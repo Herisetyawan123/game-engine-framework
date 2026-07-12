@@ -27,9 +27,9 @@ class GameScene extends Scene {
     }
     this.firstPick = null; this.secondPick = null;
 
-    this.scoreLabel = g.ui.add(new Label(40, 50, 'Score: 0', { font: '26px sans-serif' }));
-    this.timeLabel = g.ui.add(new Label(BASE_WIDTH - 40, 50, 'Time: 0s', { font: '26px sans-serif', align: 'right' }));
-    g.ui.add(new Button(BASE_WIDTH / 2 - 60, 20, 120, 44, 'PAUSE', () => this.openPause(), { color: '#374151', hoverColor: '#1f2937', font: '20px sans-serif' }));
+    this.scoreLabel = g.ui.add(new Label({ x: 'start', y: 50, text: 'Score: 0' }, null, 'Score: 0', { font: '26px sans-serif' }));
+    this.timeLabel = g.ui.add(new Label({ x: 'end', y: 50, text: 'Time: 0s' }, null, 'Time: 0s', { font: '26px sans-serif', align: 'right' }));
+    g.ui.add(new Button({ x: 'center', y: 20, width: 120, height: 44, label: 'PAUSE', onClick: () => this.openPause() }, null, null, null, 'PAUSE', () => this.openPause(), { color: '#374151', hoverColor: '#1f2937', font: '20px sans-serif' }));
   }
   tryFlip(card) {
     const g = this.game;
@@ -64,10 +64,10 @@ class GameScene extends Scene {
   openPause() {
     const g = this.game;
     g.paused = true;
-    const popup = new Popup(BASE_WIDTH / 2 - 220, BASE_HEIGHT / 2 - 150, 440, 300, { color: 'rgba(15,23,42,0.97)' });
-    popup.add(new Label(BASE_WIDTH / 2, BASE_HEIGHT / 2 - 90, 'PAUSED', { align: 'center', font: 'bold 32px sans-serif' }));
-    popup.add(new Button(BASE_WIDTH / 2 - 150, BASE_HEIGHT / 2 - 30, 300, 56, 'RESUME', () => { g.paused = false; g.ui.removePopup(popup); }));
-    popup.add(new Button(BASE_WIDTH / 2 - 150, BASE_HEIGHT / 2 + 50, 300, 56, 'MAIN MENU', () => { g.paused = false; g.scenes.switchTo('menu'); }, { color: '#6b7280', hoverColor: '#4b5563' }));
+    const popup = new Popup({ x: 'center', y: 'center', width: 440, height: 300, color: 'rgba(15,23,42,0.97)' });
+    popup.add(new Label({ x: 'center', y: 180, text: 'PAUSED' }, null, 'PAUSED', { align: 'center', font: 'bold 32px sans-serif' }));
+    popup.add(new Button({ x: 'center', y: 240, width: 300, height: 56, label: 'RESUME', onClick: () => { g.paused = false; g.ui.removePopup(popup); } }));
+    popup.add(new Button({ x: 'center', y: 320, width: 300, height: 56, label: 'MAIN MENU', onClick: () => { g.paused = false; g.scenes.switchTo('menu'); } }, null, null, null, 'MAIN MENU', () => { g.paused = false; g.scenes.switchTo('menu'); }, { color: '#6b7280', hoverColor: '#4b5563' }));
     g.ui.addPopup(popup);
   }
   update(dt) {

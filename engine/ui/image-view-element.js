@@ -1,9 +1,12 @@
 class ImageView extends UIElement {
-  constructor(x, y, w, h, assets, key, opts = {}) {
-    super(x, y, w, h);
-    this.assets = assets;
-    this.key = key;
-    this.opacity = opts.opacity !== undefined ? opts.opacity : 1;
+  constructor(xOrSpec, y, w, h, assets, key, opts = {}) {
+    const isObjectSpec = xOrSpec && typeof xOrSpec === 'object' && !Array.isArray(xOrSpec);
+    const spec = isObjectSpec ? xOrSpec : normalizeUIPositionSpec(xOrSpec, y, w, h);
+    super(spec.x, spec.y, spec.width, spec.height);
+    const options = isObjectSpec ? { ...spec, ...opts } : opts;
+    this.assets = options.assets || assets;
+    this.key = options.key || key || '';
+    this.opacity = options.opacity !== undefined ? options.opacity : 1;
   }
   draw(ctx) {
     if (!this.visible) return;

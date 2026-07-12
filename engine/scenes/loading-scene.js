@@ -8,8 +8,8 @@ class LoadingScene extends Scene {
     const g = this.game;
     this.nextScene = g.first_scene || '404';
     this.progress = 0;
-    this.bar = new ProgressBar(BASE_WIDTH / 2 - 200, BASE_HEIGHT / 2, 400, 24, 0);
-    this.label = new Label(BASE_WIDTH / 2, BASE_HEIGHT / 2 - 40, 'Loading...', { align: 'center', font: '32px sans-serif' });
+    this.bar = new ProgressBar({ x: 'center', y: 'center', width: 400, height: 24 }, null, 400, 24, 0);
+    this.label = new Label({ x: 'center', y: 'center', text: 'Loading...' }, null, 'Loading...', { align: 'center', font: '32px sans-serif' });
   }
   update(dt) {
     this.progress = Math.min(1, this.progress + dt * 1.4);

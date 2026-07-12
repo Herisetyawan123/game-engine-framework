@@ -1,9 +1,12 @@
 class Panel extends UIElement {
-  constructor(x, y, w, h, opts = {}) {
-    super(x, y, w, h);
-    this.color = opts.color || 'rgba(20,20,30,0.92)';
-    this.radius = opts.radius !== undefined ? opts.radius : 16;
-    this.stroke = opts.stroke || '#475569';
+  constructor(xOrSpec, y, w, h, opts = {}) {
+    const isObjectSpec = xOrSpec && typeof xOrSpec === 'object' && !Array.isArray(xOrSpec);
+    const spec = isObjectSpec ? xOrSpec : normalizeUIPositionSpec(xOrSpec, y, w, h);
+    super(spec.x, spec.y, spec.width, spec.height);
+    const options = isObjectSpec ? { ...spec, ...opts } : opts;
+    this.color = options.color || 'rgba(20,20,30,0.92)';
+    this.radius = options.radius !== undefined ? options.radius : 16;
+    this.stroke = options.stroke || '#475569';
   }
   draw(ctx) {
     if (!this.visible) return;
