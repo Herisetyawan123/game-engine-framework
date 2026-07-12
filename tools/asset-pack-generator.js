@@ -3,11 +3,13 @@ const fs = require('fs');
 const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
-const sourceDir = path.join(rootDir, 'assets', 'images');
+const imageSourceDir = path.join(rootDir, 'assets', 'images');
+const audioSourceDir = path.join(rootDir, 'assets', 'audios');
 const outputFile = path.join(rootDir, 'assets', 'asset.pack.js');
 const watchMode = process.argv.includes('--watch');
 
 const IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.bmp', '.avif']);
+const AUDIO_EXTENSIONS = new Set(['.mp3', '.wav', '.ogg', '.m4a', '.aac', '.flac']);
 const MIME_TYPES = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
@@ -16,14 +18,20 @@ const MIME_TYPES = {
   '.webp': 'image/webp',
   '.svg': 'image/svg+xml',
   '.bmp': 'image/bmp',
-  '.avif': 'image/avif'
+  '.avif': 'image/avif',
+  '.mp3': 'audio/mpeg',
+  '.wav': 'audio/wav',
+  '.ogg': 'audio/ogg',
+  '.m4a': 'audio/mp4',
+  '.aac': 'audio/aac',
+  '.flac': 'audio/flac'
 };
 
 function ensureDirectory(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
 
-function listImageFiles(dirPath, files = []) {
+function listFiles(dirPath, extensions, files = []) {
   if (!fs.existsSync(dirPath)) return files;
 
   const entries = fs.readdirSync(dirPath, { withFileTypes: true })
@@ -32,8 +40,8 @@ function listImageFiles(dirPath, files = []) {
   for (const entry of entries) {
     const fullPath = path.join(dirPath, entry.name);
     if (entry.isDirectory()) {
-      listImageFiles(fullPath, files);
-    } else if (entry.isFile() && IMAGE_EXTENSIONS.has(path.extname(entry.name).toLowerCase())) {
+      listFiles(fullPath, extensions, files);
+    } else if (entry.isFile() && extensions.has(path.extname(entry.name).toLowerCase())) {
       files.push(fullPath);
     }
   }
@@ -41,7 +49,7 @@ function listImageFiles(dirPath, files = []) {
   return files;
 }
 
-function getRelativeAssetKey(filePath) {
+function getRelativeAssetKey(filePath, sourceDir) {
   const relative = path.relative(sourceDir, filePath);
   const normalized = relative.split(path.sep).join('/');
   const ext = path.extname(normalized).toLowerCase();
@@ -53,39 +61,52 @@ function getMimeType(filePath) {
   return MIME_TYPES[ext] || 'application/octet-stream';
 }
 
-function buildAssetPackContent(images) {
-  const entries = Object.entries(images).sort(([a], [b]) => a.localeCompare(b));
-  const body = entries.map(([key, value]) => `    ${JSON.stringify(key)}: ${JSON.stringify(value)}`).join(',\n');
+function buildAssetPackContent(images, audios) {
+  const imageEntries = Object.entries(images).sort(([a], [b]) => a.localeCompare(b));
+  const audioEntries = Object.entries(audios).sort(([a], [b]) => a.localeCompare(b));
+  const imageBody = imageEntries.map(([key, value]) => `    ${JSON.stringify(key)}: ${JSON.stringify(value)}`).join(',\n');
+  const audioBody = audioEntries.map(([key, value]) => `    ${JSON.stringify(key)}: ${JSON.stringify(value)}`).join(',\n');
 
-  return `window.__ASSETS_PACK__ = {\n  images: {\n${body ? body + '\n' : ''}  }\n};\n`;
+  return `window.__ASSETS_PACK__ = {\n  images: {\n${imageBody ? imageBody + '\n' : ''}  },\n  audios: {\n${audioBody ? audioBody + '\n' : ''}  }\n};\n`;
 }
 
 function generateAssetPack() {
   ensureDirectory(path.dirname(outputFile));
-  const imageFiles = listImageFiles(sourceDir);
+  const imageFiles = listFiles(imageSourceDir, IMAGE_EXTENSIONS);
+  const audioFiles = listFiles(audioSourceDir, AUDIO_EXTENSIONS);
   const images = {};
+  const audios = {};
 
   for (const filePath of imageFiles) {
-    const key = getRelativeAssetKey(filePath);
+    const key = getRelativeAssetKey(filePath, imageSourceDir);
     const mimeType = getMimeType(filePath);
     const buffer = fs.readFileSync(filePath);
     const base64 = buffer.toString('base64');
     images[key] = `data:${mimeType};base64,${base64}`;
   }
 
-  const content = buildAssetPackContent(images);
+  for (const filePath of audioFiles) {
+    const key = getRelativeAssetKey(filePath, audioSourceDir);
+    const mimeType = getMimeType(filePath);
+    const buffer = fs.readFileSync(filePath);
+    const base64 = buffer.toString('base64');
+    audios[key] = `data:${mimeType};base64,${base64}`;
+  }
+
+  const content = buildAssetPackContent(images, audios);
   fs.writeFileSync(outputFile, content, 'utf8');
-  console.log(`[asset-pack] wrote ${Object.keys(images).length} image(s) to ${path.relative(rootDir, outputFile)}`);
+  console.log(`[asset-pack] wrote ${Object.keys(images).length} image(s) and ${Object.keys(audios).length} audio file(s) to ${path.relative(rootDir, outputFile)}`);
 }
 
 function startWatching() {
-  if (!fs.existsSync(sourceDir)) {
-    console.error(`[asset-pack] source folder not found: ${sourceDir}`);
+  const watchedDirs = [imageSourceDir, audioSourceDir].filter((dirPath) => fs.existsSync(dirPath));
+  if (!watchedDirs.length) {
+    console.error('[asset-pack] no source folders found');
     process.exit(1);
   }
 
   generateAssetPack();
-  console.log(`[asset-pack] watching ${path.relative(rootDir, sourceDir)} for changes...`);
+  console.log(`[asset-pack] watching ${watchedDirs.map((dirPath) => path.relative(rootDir, dirPath)).join(', ')} for changes...`);
 
   let timer = null;
   const schedule = () => {
@@ -110,7 +131,7 @@ function startWatching() {
     }
   };
 
-  watchDirectory(sourceDir);
+  watchedDirs.forEach(watchDirectory);
   const subdirs = [];
   const walk = (dirPath) => {
     for (const entry of fs.readdirSync(dirPath, { withFileTypes: true })) {
@@ -121,7 +142,7 @@ function startWatching() {
       }
     }
   };
-  walk(sourceDir);
+  watchedDirs.forEach(walk);
   subdirs.forEach(watchDirectory);
 }
 

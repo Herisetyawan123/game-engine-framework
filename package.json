@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build:assets": "node tools/asset-pack-generator.js",
-    "watch:assets": "node tools/asset-pack-generator.js --watch"
+    "watch:assets": "node tools/asset-pack-generator.js --watch",
+    "create:scene": "node tools/create-scene.js"
   }
 }
