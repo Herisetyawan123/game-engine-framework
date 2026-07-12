@@ -26,7 +26,7 @@ class RotateManager {
     } else {
       this.overlay.style.display = 'none';
       if (this.wasPortrait || initial) {
-        this.fs.requestOnce();          // requested at most once, ever
+        // this.fs.requestOnce();          // requested at most once, ever
         this.onLandscape && this.onLandscape();
       }
       this.wasPortrait = false;

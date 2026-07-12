@@ -101,7 +101,17 @@ class AudioManager {
           this.bgmAudio.pause();
       }
   }
+  destroyBacksound()
+  {
+      if (!this.bgmAudio) return;
 
+      this.bgmAudio.pause();
+      this.bgmAudio.currentTime = 0;
+      this.bgmAudio.src = "";
+      this.bgmAudio.load();
+
+      this.bgmAudio = null;
+  }
   play(src, opt = {}) {
       if (this.muted) return;
       

@@ -44,3 +44,58 @@
   #rotate-overlay p {
     font-size: 20px; font-weight: 600; margin: 0; max-width: 320px; line-height: 1.4;
   }
+
+  /* fullscreen */
+  .fullscreen-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.9);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    z-index:999999;
+}
+
+.fullscreen-overlay.hidden{
+    display:none;
+}
+
+.fullscreen-content{
+    width:min(420px,90%);
+    text-align:center;
+    color:white;
+}
+
+.fullscreen-icon{
+    font-size:72px;
+    margin-bottom:20px;
+}
+
+.fullscreen-content h2{
+    margin-bottom:10px;
+}
+
+.fullscreen-content p{
+    opacity:.8;
+    line-height:1.6;
+    margin-bottom:30px;
+}
+
+.fullscreen-content button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    margin-bottom:12px;
+}

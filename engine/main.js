@@ -62,6 +62,8 @@ class Game {
     this.ctx = this.canvas.getContext('2d');
     this.container = document.getElementById('game-container');
     this.overlay = document.getElementById('rotate-overlay');
+    this.overlay_fs = document.getElementById('fullscreen-overlay')
+    this.btn_fs = document.getElementById('btn-fullscreen');
 
     this.storage = new StorageManager('hgf_demo');
     this.assets = new AssetManager();
@@ -72,11 +74,19 @@ class Game {
     this.animations = new AnimationManager();
     this.ui = new UIManager(this.input);
     this.scenes = new SceneManager(this);
-    this.fullscreen = new FullscreenManager();
+    this.fullscreen = new FullscreenManager(this.overlay_fs, this.btn_fs);
     this.rotate = new RotateManager(
       this.overlay, this.fullscreen,
       () => { this.paused = false; },   // onLandscape
       () => { this.paused = true; }     // onPortrait
+    );
+    this.fullscreen.eventAfterFullscreen(
+      () => {
+        this.audio.startBacksound();
+      },
+      () => {
+        this.audio.destroyBacksound();
+      }
     );
 
     this.paused = false;
@@ -92,7 +102,7 @@ class Game {
     this.scenes.register('boot', BootScene);
     this.scenes.register('loading', LoadingScene);
     registerAllScenes(this);
-    
+
     this.first_scene = this.scenes.getRouteKey(this.first_scene || 'home');
     this.scenes.switchTo(this.first_scene, null, { updateRoute: true });
     requestAnimationFrame(t => this._loop(t));
