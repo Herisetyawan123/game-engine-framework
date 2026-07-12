@@ -8,5 +8,4 @@ function registerAllScenes(game) {
 
     game.scenes.register('home', HomeScene);
     game.scenes.register('page-one', PageOneScene);
-    game.scenes.register('drag-demo', DragDropDemoScene);
 }

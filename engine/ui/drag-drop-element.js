@@ -8,7 +8,8 @@ class DragArea extends UIElement {
     this.assets = options.assets || null;
     this.image = options.image || options.backgroundImage || options.background || options.src || null;
     this.imageKey = options.imageKey || options.bgImageKey || options.key || null;
-    this.key = options.key || options.id || null;
+    this.key = options.key || null;
+    this.id = options.id || null;
     this.color = options.color || 'rgba(59,130,246,0.95)';
     this.radius = options.radius !== undefined ? options.radius : 16;
     this.stroke = options.stroke || '#f8fafc';

@@ -2,9 +2,9 @@ class HomeScene extends Scene {
   create() {
     const g = this.game;
     this.createNavigation();
-    g.ui.add(new ImageView({ x: 'center', y: 70, width: 300, height: 60, assets: g.assets, key: 'homepage/smart_steps' }));
-    g.ui.add(new ImageView({ x: 'center', y: 150, width: 100, height: 40, assets: g.assets, key: 'homepage/year_1' }));
-    g.ui.add(new ImageView({ x: 'center', y: 220, width: 800, height: 250, assets: g.assets, key: 'homepage/move_your_body' }));
+    g.ui.add(new ImageView({ x: 'center', y: 70, width: 300, height: 60, assets: g.assets, src: 'homepage/smart_steps' }));
+    g.ui.add(new ImageView({ x: 'center', y: 150, width: 100, height: 40, assets: g.assets, src: 'homepage/year_1' }));
+    g.ui.add(new ImageView({ x: 'center', y: 220, width: 800, height: 250, assets: g.assets, src: 'homepage/move_your_body' }));
 
     g.ui.add(new ImageButton({
       x: 'center',

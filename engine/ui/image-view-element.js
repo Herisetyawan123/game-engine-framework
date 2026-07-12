@@ -10,9 +10,9 @@ class ImageView extends UIElement {
     this.opacity = options.opacity !== undefined ? options.opacity : 1;
   }
   _resolveImage() {
-    if (this.src) return this.src;
-    if (this.assets && this.key) return this.assets.getImage(this.key);
-    return null;
+    if (!this.src) return null;
+    if (typeof this.src === 'string' && this.assets) return this.assets.getImage(this.src);
+    return this.src;
   }
   draw(ctx) {
     if (!this.visible) return;
@@ -23,5 +23,22 @@ class ImageView extends UIElement {
     ctx.drawImage(img, this.x, this.y, this.width, this.height);
     ctx.restore();
   }
-  setImage(key) { this.key = key; }  // ganti gambar saat runtime
+  setImage(src, opt = {}) {
+    this.src = src;
+    if (!opt || typeof opt !== 'object' || Array.isArray(opt)) return;
+
+    const { xOrSpec, y, w, h, width, height, opacity } = opt;
+    const hasPositionConfig = xOrSpec !== undefined || y !== undefined || w !== undefined || h !== undefined || width !== undefined || height !== undefined;
+    if (hasPositionConfig) {
+      const spec = normalizeUIPositionSpec(xOrSpec !== undefined ? xOrSpec : opt, y, w ?? width, h ?? height);
+      this.x = resolveUIAnchorValue(spec.x, BASE_WIDTH, spec.width ?? this.width);
+      this.y = resolveUIAnchorValue(spec.y, BASE_HEIGHT, spec.height ?? this.height);
+      this.width = spec.width ?? this.width;
+      this.height = spec.height ?? this.height;
+    }
+
+    if (opacity !== undefined) {
+      this.opacity = opacity;
+    }
+  }  // ganti gambar saat runtime
 }
